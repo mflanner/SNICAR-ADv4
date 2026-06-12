@@ -1,4 +1,4 @@
-% Driver for SNICARv3 or SNICAR-ADv3 subroutine
+% Driver for snicarAD_v4 subroutine
 
 clear;
     
@@ -9,27 +9,27 @@ input_args.direct_beam   = 0;
 % COSINE OF SOLAR ZENITH ANGLE FOR DIRECT-BEAM RT
 input_args.coszen = cos(deg2rad(63));%cos(deg2rad(37));
   
-% SNOW LAYER THICKNESSES [m]:
+% SNOW OR ICE LAYER THICKNESSES [m]:
 % input_args.dz = [1]; 
 input_args.dz = [1,1,1,1,1]; % single, optically-semi-infinite layer
 % input_args.dz = [0.0175,0.0276,0.0455,0.0750,0.1236,0.2038,0.3360,0.5539...
 %    0.9133,1.5058,2.4826];
 
-nbr_lyr = length(input_args.dz);  % number of snow layers
+nbr_lyr = length(input_args.dz);  % number of layers
 
 % LAYER MEDIUM TYPE [ 1=snow, 2=ice]
 %  Must have same length as dz
 input_args.lyr_typ(1:nbr_lyr) = [1,1,1,2,2];
 
-% SNOW DENSITY FOR EACH LAYER (units: kg/m3)
+% SNOW OR ICE DENSITY FOR EACH LAYER (units: kg/m3)
 input_args.rho_snw(1:nbr_lyr) = [900];
 
-% SNOW GRAIN SIZE FOR EACH LAYER (units: microns):
+% GRAIN SIZE (IF SNOW LAYER) OR BUBBLE SIZE (IF ICE LAYER)) FOR EACH LAYER (units: microns):
 input_args.rds_snw(1:nbr_lyr) = [300];
   
 % ICE REFRACTIVE INDEX DATASET TO USE:
 % 1=Warren (1984); 2=Warren and Brandt (2008); 3=Picard et al. (2016); 4=CO2 ice
-input_args.ice_ri = 4;
+input_args.ice_ri = 3;
     
 % Snow grain shape option
 % 1=sphere; 2=spheroid; 3=hexagonal plate; 4=koch snowflake
@@ -58,7 +58,7 @@ input_args.ash_type = 1;
 % PARTICLE MASS MIXING RATIOS (ng/g or ug/g, depending on species)
 % NOTE: This is mass of impurity per mass of snow
 %  (i.e., mass of impurity / mass of ice+impurity)
-input_args.mss_cnc_sot1(1:nbr_lyr)  = 10;    % uncoated black carbon [nnnnn]
+input_args.mss_cnc_sot1(1:nbr_lyr)  = 10;    % uncoated black carbon [ng/g]
 input_args.mss_cnc_sot2(1:nbr_lyr)  = 10.0;    % sulfate-coated black carbon [ng/g]
 input_args.mss_cnc_brc1(1:nbr_lyr)  = 10.0;    % uncoated brown carbon [ng/g]
 input_args.mss_cnc_brc2(1:nbr_lyr)  = 10.0;    % sulfate-coated brown carbon [ng/g]
@@ -108,7 +108,7 @@ input_args.atm = 1;
 input_args.flx_dwn_bb = 1.0
 %%
 % CALL SNICAR WITH INPUT ARGUMENTS
-data_out = snicarAD_v4_co2ice(input_args);
+data_out = snicarAD_v4(input_args);
 data_out.alb_vis
 data_out.alb_nir
 
@@ -117,8 +117,8 @@ if (1==1)
     figure(1)
     str = sprintf('SZA=%f',input_args.coszen);
     plot(data_out.wvl,data_out.albedo,'linewidth',3, 'DisplayName',str);
-    axis([0.2 5 0 1]);
-    set(gca,'xtick',0.2:0.3:2.7,'fontsize',14)
+    axis([0.2 2.5 0 1]);
+    set(gca,'xtick',0.2:0.1:2.5,'fontsize',14)
     set(gca,'ytick',0:0.1:1.0,'fontsize',14);
     xlabel('Wavelength (\mum)','fontsize',20);
     ylabel('Hemispheric Albedo','fontsize',20);
