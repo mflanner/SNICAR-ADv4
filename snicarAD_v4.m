@@ -276,7 +276,7 @@ if (1==0)
     % SNOW DENSITY FOR EACH LAYER (units: kg/m3)
     rho_snw(1:nbr_lyr) = 910;
 
-    % SNOW GRAIN SIZE FOR EACH SNOW LAYER ?R BUBBLE RADIUS FOR ICE
+    % SNOW GRAIN SIZE FOR EACH SNOW LAYER OR BUBBLE RADIUS FOR ICE
     % (units: microns):
     rds_snw(1:nbr_lyr) = 750;
 
@@ -419,7 +419,7 @@ kfrsnl = find(lyr_typ==2, 1 );
 if isempty(kfrsnl) == 1
     kfrsnl=0;
 else
-    % read in precalcualted FL diffuse reflection
+    % read in precalculated FL diffuse reflection
     FL_r_dif_a = ncread(strcat(dir_op_root,'FL_reflection_diffuse_v2.nc'),strcat('R_dif_fa_',stb1));
     FL_r_dif_b  = ncread(strcat(dir_op_root,'FL_reflection_diffuse_v2.nc'),strcat('R_dif_fb_',stb1));
 end
