@@ -12,16 +12,16 @@ For additional reading on the model see:
 - Flanner, M. G., Arnheim, J., Cook, J. M., Dang, C., He, C., Huang, X., Singh, D., Skiles, S. M., Whicker, C. A., and Zender, C. S.: SNICAR-AD v3: A Community Tool for Modeling Spectral Snow Albedo, 1–49, https://doi.org/10.5194/gmd-2021-182, 2021.
 
 
-The full suite of optical properties are available at: http://snow.engin.umich.edu/opticalprops/snicar_adv4_202309/ 
+The full suite of optical properties are available at: http://snow.engin.umich.edu/opticalprops/snicar_adv4_202606/ 
 
 
 # To download the model:
 1) Download the model (snicarAD_v4.m) and model driver (snicarAD_v4_drv.m)
-2) Download the optical properties from the above link (snicar_adv4_OP.tar.gz if you want to run with snow algae, snicar_adv4_OP_no_snoalgae.tar.gz if you don't need snow algae). You should have a folder titled "snicar_480band"
+2) Download one of the following sets of optical properties from the above link:
+   - snicar_adv4_OP.tar.gz if you want to run with snow algae. This compressed file is 7.3 GB and contains many thousands of files.
+   - snicar_adv4_OP_no_snoalgae.tar.gz if you don't need snow algae. This compressed file is less than 1 GB.
+3) Unpack the compressed file, e.g., with "tar xvfz snicar_adv4_OP_no_snoalgae.tar.gz". You should now have a directory titled "snicar_480band"
 
 # To run the model: 
 1) In snicarAD_v4.m, set variable "dir_op_root" to the directory where you unpacked the optics library
 2) Open snicarAD_v4_drv.m to edit the snow and ice column properties.  Run snicarAD_v4_drv.m
-
-
-
