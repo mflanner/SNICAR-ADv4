@@ -4,15 +4,14 @@
 
 This code uses a two-stream approximation to calculate snow and ice spectral albedo and radiative fluxes at the interfaces of any number of snow or ice layers with distinct properties.
 
-Other versions of the model can be found at:
-http://snow.engin.umich.edu and https://github.com/mflanner/SNICARv3 
-
-For additional reading on the model see: 
+For comprehensive descriptions of the model, please see: 
 - Whicker, C. A., Flanner, M. G., Dang, C., Zender, C. S., Cook, J. M., and Gardner, A. S.: SNICAR-ADv4: a physically based radiative transfer model to represent the spectral albedo of glacier ice, The Cryosphere, 16, 1197–1220, https://doi.org/10.5194/tc-16-1197-2022, 2022.
 - Flanner, M. G., Arnheim, J. B., Cook, J. M., Dang, C., He, C., Huang, X., Singh, D., Skiles, S. M., Whicker, C. A., and Zender, C. S.: SNICAR-ADv3: a community tool for modeling spectral snow albedo, Geosci. Model Dev., 14, 7673–7704, https://doi.org/10.5194/gmd-14-7673-2021, 2021
 
+Other versions of the model can be found at:
+http://snow.engin.umich.edu and https://github.com/mflanner/SNICARv3 
 
-The full suite of optical properties are available at: http://snow.engin.umich.edu/opticalprops/snicar_adv4_202606/ 
+Optical properties needed to run the model are available at: http://snow.engin.umich.edu/opticalprops/snicar_adv4_202606/ 
 
 
 # To download the model:
