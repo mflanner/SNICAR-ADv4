@@ -1,5 +1,8 @@
-
-% last edited by C.Whicker MAY 20th
+% edits by M. Flanner on 20260612:
+%  - updated pointers to new Fresnel and refractive index .nc files
+%
+%
+% edits by C.Whicker MAY 20th
 % - added bubble properties
 % - added the ability to include pure ice layers
 %        - snell's law & Fresnel layer
@@ -20,7 +23,7 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % The Snow, Ice, and Aerosol Radiative Model with Adding-Doubling
-% solver, version 4.0 (SNICAR-ADv3)
+% solver, version 4.0 (SNICAR-ADv4)
 %
 % References cited and open-source license are at end of file.
 %
@@ -211,18 +214,23 @@
 
 %%%%%%%%%%%%% BEGIN CODE: %%%%%%%%%%%%%%%
 
-function data_out = snicarAD_v4_co2ice(input_args)
-addpath('snicar_480band')
+function data_out = snicarAD_v4(input_args)
+
 % ROOT DIRECTORY FOR ALL OPTICAL AND SPECTRAL IRRADIANCE FILES
 dir_op_root = 'snicar_480band/';
+%addpath(dir_op_root);
 
 
 % IF USER PREFERS TO RUN THIS AS A SCRIPT INSTEAD OF A FUNCTION:
 %   (1) COMMENT OUT THE FUNCTION CALL ABOVE
 %   (2) SET 1==1 BELOW AND DEFINE ALL INPUT IN THIS BLOCK
 
-if (1==1)
+if (1==0)
 
+    clear;
+
+    dir_op_root = 'snicar_480band/';
+    
     % RADIATIVE TRANSFER CONFIGURATION:
     direct_beam   = 1;   % 1= Direct-beam incident flux, 0= Diffuse incident flux
     % NOTE that cloudy-sky spectral fluxes are loaded when direct_beam=0
@@ -258,6 +266,7 @@ if (1==1)
     %dz = [0.02 0.02 0.05];
     dz = [0.0071,0.0279,0.0623,0.1189,0.2122,0.3661,0.6198];
     %dz = sum(dz)
+    dz = [100];
     nbr_lyr = length(dz);  % number of layers
 
     % LAYER MEDIUM TYPE [ 1=snow, 2=ice]
@@ -411,8 +420,8 @@ if isempty(kfrsnl) == 1
     kfrsnl=0;
 else
     % read in precalcualted FL diffuse reflection
-    FL_r_dif_a = ncread(strcat(dir_op_root,'FL_reflection_diffuse.nc'),strcat('R_dif_fa_',stb1));
-    FL_r_dif_b  = ncread(strcat(dir_op_root,'FL_reflection_diffuse.nc'),strcat('R_dif_fb_',stb1));
+    FL_r_dif_a = ncread(strcat(dir_op_root,'FL_reflection_diffuse_v2.nc'),strcat('R_dif_fa_',stb1));
+    FL_r_dif_b  = ncread(strcat(dir_op_root,'FL_reflection_diffuse_v2.nc'),strcat('R_dif_fb_',stb1));
 end
 % % % %  % % % %  % % % %  % % % %  % % % %  % % % %  % % % %  % % % %  % % % %
 
@@ -446,7 +455,7 @@ dir_spc           = strcat(dir_op_root,'fsds/');
 dir_bbl  = strcat(dir_op_root,stb2,'/');
 
 % read file with ice refractive index
-ice_rfidx_file = strcat(dir_op_root,"rfidx_ice.nc");
+ice_rfidx_file = strcat(dir_op_root,"rfidx_ice_v2.nc");
 
 rfidx_ice_re = ncread(ice_rfidx_file,ice_rfidx_re_str)';
 rfidx_ice_im = ncread(ice_rfidx_file,ice_rfidx_im_str)';
@@ -905,7 +914,6 @@ for n=1:nbr_lyr
             ext_cff_mss_aer = ext_cff_mss_aer_h2oice;
             omega_aer       = omega_aer_h2oice;
             g_aer           = g_aer_h2oice;
-
         end
     end
 
@@ -1408,13 +1416,13 @@ data_out.vlm_frc_air    = vlm_air;            % volume fraction of air in each i
 data_out.No_bbl_cnc     = No;                 % number concentration of air bubbles in ice [bbls/m3]
 data_out.ssa            = ssa;                % specific surface area of snow or ice [m2/kg]
 
-if (0==1)
+if (1==0)
 
     figure(1)
     hold on
-    plot(data_out.wvl,data_out.albedo,'linewidth',3,'DisplayName','SNICAR-ADv3');
-    axis([0.2 5 0 1]);
-    set(gca,'xtick',0.2:0.2:1.8,'fontsize',14)
+    plot(data_out.wvl,data_out.albedo,'linewidth',3,'DisplayName','SNICAR-ADv4');
+    axis([0.2 2.5 0 1]);
+    set(gca,'xtick',0.2:0.2:2.5,'fontsize',14)
     set(gca,'ytick',0:0.1:1,'fontsize',14);
     xlabel('Wavelength (\mum)','fontsize',20);
     ylabel('Hemispheric Albedo','fontsize',20);
